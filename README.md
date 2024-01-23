@@ -1,2 +1,2 @@
 # scripts
-Repository for all the scripts I use
+Repository for all the scripts I use :)
