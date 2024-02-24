@@ -55,20 +55,16 @@ CURRENT_DIR=$(pwd)
 
 # Go to source directory and run Maven build
 cd "${SOURCE_DIR}" || exit
-mvn clean package
-
-# In case of failure, exit
-if [[ $? -ne 0 ]]; then
+if ! mvn clean package;
+then
     echo "Maven build failed" >&2
     cd "${CURRENT_DIR}" || exit
     exit 1
 fi
 
 # Build Docker image
-docker build -t "${IMAGE_NAME}" .
-
-# In case of failure, exit
-if [[ $? -ne 0 ]]; then
+if ! docker build -t "${IMAGE_NAME}" .;
+then
     echo "Docker build failed" >&2
     cd "${CURRENT_DIR}" || exit
     exit 1
@@ -77,16 +73,19 @@ fi
 # Run Docker image
 # If ports are specified, expose them
 if [[ -z ${PORT} ]]; then
-    docker run -d "${IMAGE_NAME}"
+    if ! docker run -d "${IMAGE_NAME}" ;
+    then
+        echo "Docker run failed" >&2
+        cd "${CURRENT_DIR}" || exit
+        exit 1
+    fi
 else
-    docker run -d -p "${PORT}":"${PORT}" "${IMAGE_NAME}"
-fi
-
-# In case of failure, exit
-if [[ $? -ne 0 ]]; then
-    echo "Docker run failed" >&2
-    cd "${CURRENT_DIR}" || exit
-    exit 1
+    if ! docker run -d -p "${PORT}":"${PORT}" "${IMAGE_NAME}";
+    then
+        echo "Docker run failed" >&2
+        cd "${CURRENT_DIR}" || exit
+        exit 1
+    fi
 fi
 
 # Go back to original directory
