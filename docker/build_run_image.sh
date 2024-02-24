@@ -54,40 +54,40 @@ prase_params "$@" # Pass all arguments to the function
 CURRENT_DIR=$(pwd)
 
 # Go to source directory and run Maven build
-cd ${SOURCE_DIR} || exit
+cd "${SOURCE_DIR}" || exit
 mvn clean package
 
 # In case of failure, exit
 if [[ $? -ne 0 ]]; then
     echo "Maven build failed" >&2
-    cd ${CURRENT_DIR} || exit
+    cd "${CURRENT_DIR}" || exit
     exit 1
 fi
 
 # Build Docker image
-docker build -t ${IMAGE_NAME} .
+docker build -t "${IMAGE_NAME}" .
 
 # In case of failure, exit
 if [[ $? -ne 0 ]]; then
     echo "Docker build failed" >&2
-    cd ${CURRENT_DIR} || exit
+    cd "${CURRENT_DIR}" || exit
     exit 1
 fi
 
 # Run Docker image
 # If ports are specified, expose them
 if [[ -z ${PORT} ]]; then
-    docker run -d ${IMAGE_NAME}
+    docker run -d "${IMAGE_NAME}"
 else
-    docker run -d -p ${PORT}:${PORT} ${IMAGE_NAME}
+    docker run -d -p "${PORT}":"${PORT}" "${IMAGE_NAME}"
 fi
 
 # In case of failure, exit
 if [[ $? -ne 0 ]]; then
     echo "Docker run failed" >&2
-    cd ${CURRENT_DIR} || exit
+    cd "${CURRENT_DIR}" || exit
     exit 1
 fi
 
 # Go back to original directory
-cd ${CURRENT_DIR} || exit
+cd "${CURRENT_DIR}" || exit
