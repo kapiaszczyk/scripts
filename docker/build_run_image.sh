@@ -4,7 +4,7 @@
 usage()
 {
     cat<<EOF
-    Usage: $0 [-h] [-s source directory] [-n image name] [-p port] 
+    Usage: $0 [-h] [-s source directory] [-n image name] [-p port]
 
     Build and run a Docker image
 
