@@ -1,7 +1,7 @@
 <!-- ABOUT  -->
 ## About 
 
-This is a collection of scripts that I have written for various purposes, some just for learning scripting, some are used by me when I code. I always try to include scripts both for bash and powershell.
+This is a collection of scripts that I have written for various purposes, some just for learning scripting, some are used by me when I code. I always try to include scripts both for bash and powershell. Check out [this repository](https://github.com/kapiaszczyk/python-scripts) for scripts written in Python.
 
 <!-- USAGE -->
 ## Usage
